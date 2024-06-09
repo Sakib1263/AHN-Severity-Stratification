@@ -1,0 +1,34 @@
+# CNN train configuration file 
+config = {}
+config['parentdir'] = ''                      # root directory
+config['isPretrained'] = True                         # set to 'True' to use pretrained weights or set to 'False' to train from scratch
+config['model_mode'] = 'import_TIMM'                   # 'custom_CNN' | 'custom_ONN' | 'import_Torch' | 'import_TIMM'
+config['q_order'] = 3                                  # qth order Maclaurin approximation, common values: {1,3,5,7,9}. q=1 is equivalent to conventional CNN
+config['ONN'] = False                                  # set to 'True' if you are using ONN
+config['input_ch'] = 3                                 # 1 for gray scale x-rays, and 3 for RGB (3channel) x-rays  
+config['batch_size'] = 4                               # Batch size, Change to fit hardware, common values: {4,8,16} for 2D datasets
+# config['input_mean'] = [0.2936]                      # Dataset mean per channel, b/w [0,1]
+# config['input_std'] = [0.1895]                       # Dataset std per channel,  b/w [0,1]
+config['input_mean'] = [0.0609,0.0609,0.0609]          # Dataset mean per channel, RGB or RGBA [0,1]
+config['input_std'] = [0.1540,0.1540,0.1540]           # Dataset std per channel,  RGB or RGBA [0,1]
+config['loss_func'] = 'CrossEntropyLoss'                        # 'MSELoss', 'CrossEntropyLoss', etc. (https://pytorch.org/docs/stable/nn.html)
+config['optim_fc'] = 'Adam'                            # 'Adam', 'SGD', etc. (https://pytorch.org/docs/stable/optim.html)
+config['optim_scheduler'] = 'ReduceLROnPlateau'        # 'ReduceLROnPlateau', etc. (https://pytorch.org/docs/stable/optim.html)
+config['final_activation_func'] = 'Sigmoid'         # 'Sigmoid', 'Softmax', etc. (https://pytorch.org/docs/stable/nn.html)
+config['lr'] = 0.0002                                  # learning rate 
+config['stop_criteria'] = 'accuracy'                   # Stopping criteria: 'loss' or 'accuracy'
+config['n_epochs'] = 300                               # Number of training epochs
+config['epochs_patience'] = 10                         # If val loss did not decrease for a number of epochs then decrease learning rate by a factor of lr_factor
+config['lr_factor'] = 0.1                              # Learning factor
+config['max_epochs_stop'] = 30                         # Maximum number of epochs with no improvement in validation loss for early stopping
+config['num_folds'] = 1                                # Number of cross-validation folds
+config['Resize_h'] = 224                               # Network input (Image) height
+config['Resize_w'] = config['Resize_h']                # Network input (Image) width
+config['load_weights'] = None                      # Default: False, comment it out and Specify path of pretrained model weights above to make it True  
+# config['load_weights'] = config['parentdir'] + 'Checkpoint_1.pt' # specify path of pretrained model weights or set to False to train from scratch
+config['aux_logits'] = False                  # Required for models with auxilliary outputs (e.g., InceptionV3)     
+config['model_to_load'] = 'convnext_xlarge.fb_in22k_ft_in1k'                # Choose one of the models specified in config file
+config['model_name'] = 'convnext_xlarge_AHN_Classification'  # Choose a unique name for result folder            
+config['encoder'] = False                              # Set to 'True' if you retrain Seg. model encoder as a classifer 
+config['fold_to_run'] = [1,5]                          # Define as [] to loop through all folds, or specify start and end folds i.e. [3,5] or [5,5]
+config['outdir'] = ''
