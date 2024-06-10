@@ -71,8 +71,8 @@ class CNN_Classifier(nn.Module):
                 nn.Linear(in_channels, class_num),
                 nn.Tanh()
                 )
-        torch.nn.init.xavier_uniform_(self.classifier[0].weight)
-        self.classifier[0].bias.data.fill_(0.01) 
+        # torch.nn.init.xavier_uniform_(self.classifier[0].weight)
+        # self.classifier[0].bias.data.fill_(0.01) 
      
     def forward(self,x):
         x = self.classifier(x)
